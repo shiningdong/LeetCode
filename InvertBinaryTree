@@ -1,0 +1,33 @@
+
+public class InvertBinaryTree {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		TreeNode a = new TreeNode(1);
+		TreeNode b = new TreeNode(2);
+		TreeNode c = new TreeNode(3);
+		TreeNode d = new TreeNode(4);
+		TreeNode e = new TreeNode(5);
+		a.left = b; a.right =c; b.left = d; b.right = e;
+		
+		TreeNode ans = invertTree(a);
+		System.out.println(ans.toString());
+		System.out.println(ans.left.toString());
+		System.out.println(ans.right.toString());
+		System.out.println(ans.right.left.toString());
+		System.out.println(ans.right.right.toString());
+	}
+	
+	public static TreeNode invertTree(TreeNode root) {
+        if(root==null)
+            return null;
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+
+        root.left = invertTree(right);;
+        root.right = invertTree(left);
+
+        return root;
+    }
+
+}
