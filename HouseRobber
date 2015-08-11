@@ -1,0 +1,30 @@
+
+public class HouseRobber {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[] nums = new int[] {114,117,207,117,235,82,90,67,143,146,53,108,200,91,80,223,58,170,110,236,81,90,222,160,165,195,187,199,114,235,197,187,69,129,64,214,228,78,188,67,205,94,205,169,241,202,144,240};
+		//int[] nums = new int[] {1,1,1,1,1,1,1,1};
+		System.out.println(rob(nums));
+	}
+	
+	public static int rob(int[] nums) {
+		// use dynamic programming to record the previous results
+		int len = nums.length;
+        if(len==0)
+            return 0;
+        if(len==1)
+            return nums[0];
+        if(len==2)
+            return Math.max(nums[0],nums[1]);
+        int[] results = new int[len];
+
+        results[0] = nums[0];
+        results[1] = Math.max(nums[0],nums[1]);
+
+        for(int i=2; i<len; i++) {
+            results[i] = Math.max(results[i-2]+nums[i], results[i-1]);
+        }
+        return results[len-1];
+    }
+}
