@@ -1,0 +1,42 @@
+
+public class FactorialTrailingZeroes {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		//System.out.println(twoFactorize(1));
+		//System.out.println(fiveFactorize(30));
+		//System.out.println(trailingZeroes(20));
+	}
+	
+	/*****simplest version******/
+	public static int trailingZeroesII(int n) {
+		return n>0 ? n/5+trailingZeroesII(n/5) : 0;
+    }
+	
+	
+	public static int trailingZeroes(int n) {
+		int twoSum = 0;
+		int fiveSum =0;
+        for(int i=n; i>0; i--) {
+        	twoSum += twoFactorize(i);
+        	fiveSum += fiveFactorize(i);
+        }
+        return twoSum<=fiveSum ? twoSum : fiveSum;
+    }
+
+    public static int twoFactorize(int n) {
+        if(n%2==0)
+            return twoFactorize(n/2) + 1;
+        else
+            return 0;
+    }
+
+    public static int fiveFactorize(int n) {
+        if(n%5==0)
+            return fiveFactorize(n/5) + 1;
+        else
+            return 0;
+    }
+
+}
