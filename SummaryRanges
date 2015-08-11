@@ -1,0 +1,62 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class SummaryRanges {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[] array = new int[]{1,2,4,5,7,9};
+		System.out.println(summaryRanges(array));
+	}
+	public static List<String> summaryRanges(int[] nums) {
+        if(nums.length == 0 || nums == null)
+            return new ArrayList<String>();
+        return helper(nums, 0, nums.length);
+    }
+
+    public static List<String> helper(int[] nums, int i, int j) {
+        List<String> ans = new ArrayList<String>();
+        if(i==j-1) {
+            ans.add(nums[i] + "");
+            return ans;
+        }
+        if(nums[i]+(j-i-1) == nums[j-1]) {
+            ans.add(nums[i] + "->" + nums[j-1]);
+            return ans;
+        }
+        // divide and conquer
+        int mid = (i+j)/2;
+        List<String> left = helper(nums, i, mid);
+        List<String> right = helper(nums, mid, j);
+        // combine the answer
+        int left_edge_right = edgeRight(left.get(left.size()-1));
+        int right_edge_left = edgeLeft(right.get(0));
+
+        int left_edge_left = edgeLeft(left.get(left.size()-1));
+        int right_edge_right = edgeRight(right.get(0));
+
+        if(left_edge_right==right_edge_left-1) {
+            String newEdge = left_edge_left + "->" + right_edge_right ;
+            left.remove(left.size()-1);
+            right.remove(0);
+            ans.addAll(left); ans.add(newEdge); ans.addAll(right);
+        }
+        else {
+            ans.addAll(left); ans.addAll(right);
+        }
+        return ans;
+    }
+
+    public static int edgeRight(String s) {
+        String[] strs = s.split("->");
+        if(strs.length==1)
+            return Integer.parseInt(strs[0]);
+        else
+            return Integer.parseInt(strs[1]);
+    }
+
+    public static int edgeLeft(String s) {
+        String strs[] = s.split("->");
+        return Integer.parseInt(strs[0]);
+    }
+}
